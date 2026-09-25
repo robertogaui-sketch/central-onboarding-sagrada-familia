@@ -107,9 +107,17 @@
   .sub-titulo{margin:40px 0 16px;}
   .sub-titulo h3{font-size:24px;font-weight:700;}
   .sub-titulo p{margin:4px 0 0;color:var(--texto-2);font-size:15px;}
-  .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;}
-  @media (max-width:860px){.cards{grid-template-columns:repeat(2,minmax(0,1fr));}}
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;}
   @media (max-width:480px){.cards{grid-template-columns:1fr;}}
+  a.card{text-decoration:none;display:block;transition:transform .15s ease,box-shadow .15s ease;}
+  a.card:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(180,83,9,.12);}
+  .card .thumb{display:block;position:relative;aspect-ratio:16/9;border-radius:10px;margin-bottom:12px;
+    background-size:cover;background-position:center;background-color:var(--ambar-100);}
+  .card .play{position:absolute;left:50%;top:50%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;
+    background:var(--vermelho);box-shadow:0 6px 16px rgba(0,0,0,.25);}
+  .card .play::after{content:"";position:absolute;left:18px;top:14px;border-left:14px solid #fff;
+    border-top:9px solid transparent;border-bottom:9px solid transparent;}
+  .card .assistir{display:inline-block;margin-top:10px;color:var(--vermelho);font-weight:800;font-size:14px;}
   .card{background:#fff;border:1px solid var(--linha);border-top:4px solid var(--ouro-400);border-radius:16px;padding:18px;}
   .card .k{display:inline-block;color:var(--vermelho);font-size:11.5px;font-weight:800;text-transform:uppercase;
     letter-spacing:.5px;margin-bottom:8px;}
@@ -177,6 +185,11 @@
           <div class="linha"><span>Central de Ajuda — Gestores <span class="tag">FAQ</span></span><a href="https://www.teachy.com.br/pt-BR/teachy-help-center" target="_blank" rel="noopener">Acessar →</a></div>
         </aside>
       </div>
+      <div class="sub-titulo"><h3>Formação para gestores</h3><p>Live da Teachy sobre como formar coordenadores, professores e famílias em IA.</p></div>
+      <div class="cards">
+        <a class="card video" href="https://www.youtube.com/watch?v=iJbFKzeNJ4c&list=PLBkhr8kdTOm3lcWahiNaLIRfbzKnZZdPH" target="_blank" rel="noopener"><span class="thumb" style="background-image:url(https://i.ytimg.com/vi/iJbFKzeNJ4c/hqdefault.jpg)"><i class="play" aria-hidden="true"></i></span><span class="k">Live · Teachy Educação</span><p>Formação em IA para Escolas: como treinar coordenadores, professores e família em IA</p><span class="assistir">Assistir no YouTube →</span></a>
+      </div>
+      
     </section>
     <section class="panel" id="panel-professor">
       <div class="cabeca">
@@ -200,10 +213,9 @@
           <div class="linha"><span>Ajuda — Professores <span class="tag">FAQ</span></span><a href="https://www.teachy.com.br/pt-BR/teachy-help-center" target="_blank" rel="noopener">Acessar →</a></div>
         </aside>
       </div>
-      <div class="sub-titulo"><h3>Formações e certificações</h3><p>Recursos disponíveis na página oficial de mentorias e treinamentos.</p></div>
+      <div class="sub-titulo"><h3>Formações e certificações</h3><p>Uma live para começar do zero e as certificações recomendadas.</p></div>
       <div class="cards">
-        <div class="card"><span class="k">Certificação · Nível 1</span><p>IA para professores — fundamentos</p></div>
-        <div class="card"><span class="k">Certificação · Nível 2</span><p>IA para professores — avançado</p></div>
+        <a class="card video" href="https://www.youtube.com/watch?v=iUgLAbSeebM" target="_blank" rel="noopener"><span class="thumb" style="background-image:url(https://i.ytimg.com/vi/iUgLAbSeebM/hqdefault.jpg)"><i class="play" aria-hidden="true"></i></span><span class="k">Live · do zero</span><p>IA Pedagógica do Zero: IAs que Todo Profe Precisa Conhecer</p><span class="assistir">Assistir no YouTube →</span></a>
         <div class="card"><span class="k">Certificado</span><p>Como ensinar IA para seus alunos</p></div>
         <div class="card"><span class="k">Certificação</span><p>IA e Educação Financeira</p></div>
       </div>
