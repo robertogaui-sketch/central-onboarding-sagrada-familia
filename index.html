@@ -9,6 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
+    --acao:#DC2626; --acao-texto:#fff; --destaque:#FBBF24; --destaque-escuro:#B45309; --primaria:#10355A; --claro-2:#FFFBEB;   /* tutoriais em vídeo */
     --navy:#10355A; --navy-900:#081A2E;
     --ouro-200:#FDE68A; --ouro-300:#FCD34D; --ouro-400:#FBBF24; --ouro-500:#F59E0B; --ouro-600:#D97706; --ouro-700:#B45309;
     --ambar-50:#FFFBEB; --ambar-100:#FEF3C7;
@@ -130,6 +131,60 @@
   footer .wrap{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;text-align:center;}
   footer img{width:34px;height:34px;border-radius:10px;object-fit:cover;border:1px solid var(--linha);}
   footer b{color:var(--navy);font-family:'Outfit',sans-serif;font-size:16px;}
+
+  /* tutoriais em vídeo: temas em botões, cartão com capa; o player só nasce no clique */
+  .tut-chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 16px;}
+  .tut-chip{cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:8px;background:#fff;
+    border:1px solid var(--linha);color:var(--primaria);font-weight:700;font-size:14.5px;padding:9px 14px;border-radius:999px;}
+  .tut-chip span{font-size:12px;font-weight:800;background:var(--claro-2);color:var(--destaque-escuro);padding:1px 8px;border-radius:999px;}
+  .tut-chip:hover{border-color:var(--destaque);}
+  .tut-chip.active{background:var(--acao);border-color:var(--acao);color:var(--acao-texto);}
+  .tut-chip.active span{background:rgba(255,255,255,.22);color:var(--acao-texto);}
+  .tutoriais{scroll-margin-top:96px;}
+  .tut-atalho{display:inline-flex;align-items:center;gap:8px;margin-top:14px;color:var(--primaria);font-weight:700;
+    font-size:14.5px;text-decoration:none;border-bottom:2px solid var(--destaque);padding-bottom:2px;}
+  .tut-atalho i{width:22px;height:22px;border-radius:50%;background:var(--acao);position:relative;flex:none;}
+  .tut-atalho i::after{content:"";position:absolute;left:8px;top:6px;border-left:8px solid var(--acao-texto);
+    border-top:5px solid transparent;border-bottom:5px solid transparent;}
+  .tut-atalho:hover{border-bottom-color:var(--acao);}
+  .tut-chip:focus-visible,.tut-capa:focus-visible,.tut-atalho:focus-visible{outline:3px solid var(--destaque);outline-offset:3px;}
+  .tut-grupo{display:none;} .tut-grupo.active{display:block;}
+  .tut-grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;}
+  .tut{background:#fff;border:1px solid var(--linha);border-radius:16px;padding:10px 10px 14px;
+    transition:box-shadow .15s ease,border-color .15s ease;}
+  .tut:hover{border-color:var(--destaque);box-shadow:0 10px 24px rgba(0,0,0,.07);}
+  @media (prefers-reduced-motion:reduce){.tut,.tut-play{transition:none;}}
+  .tut-capa{position:relative;display:block;width:100%;aspect-ratio:16/9;border:0;border-radius:11px;cursor:pointer;
+    background:var(--claro-2) center/cover no-repeat;overflow:hidden;padding:0;}
+  .tut-capa::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.35));}
+  .tut-play{position:absolute;left:50%;top:50%;width:52px;height:52px;margin:-26px 0 0 -26px;border-radius:50%;
+    background:var(--acao);box-shadow:0 8px 20px rgba(0,0,0,.28);z-index:1;transition:transform .15s ease;}
+  .tut-play::after{content:"";position:absolute;left:21px;top:16px;border-left:15px solid var(--acao-texto);
+    border-top:10px solid transparent;border-bottom:10px solid transparent;}
+  .tut-capa:hover .tut-play{transform:scale(1.08);}
+  .tut-dur{position:absolute;right:8px;bottom:8px;z-index:1;background:rgba(0,0,0,.72);color:#fff;font-size:12px;
+    font-weight:700;padding:2px 7px;border-radius:6px;}
+  .tut video{display:block;width:100%;aspect-ratio:16/9;border-radius:11px;background:#000;}
+  .tut strong{display:block;margin:12px 4px 0;color:var(--primaria);font-size:16px;line-height:1.3;}
+  .tut small{display:block;margin:4px 4px 0;color:var(--texto-2);font-size:13.5px;line-height:1.45;}
+  /* celular: lista compacta (capa à esquerda), para não virar uma rolagem de 18 telas */
+  @media (max-width:560px){
+    .tut-chips{flex-wrap:nowrap;overflow-x:auto;margin:0 -16px 14px;padding:2px 16px 4px;scrollbar-width:none;}
+    .tut-chips::-webkit-scrollbar{display:none;}
+    .tut-chip{flex:none;font-size:14px;padding:8px 12px;}
+    .tut-grade{grid-template-columns:1fr;gap:10px;}
+    .tut{display:grid;grid-template-columns:128px 1fr;column-gap:12px;align-items:center;padding:8px;border-radius:14px;}
+    .tut .tut-capa,.tut video{grid-row:1 / span 2;border-radius:9px;}
+    .tut video{grid-column:1 / -1;grid-row:auto;}
+    .tut-play{width:34px;height:34px;margin:-17px 0 0 -17px;}
+    .tut-play::after{left:14px;top:11px;border-left-width:10px;border-top-width:6px;border-bottom-width:6px;}
+    .tut-dur{right:5px;bottom:5px;font-size:11px;padding:1px 5px;}
+    .tut strong{margin:0;font-size:15px;align-self:end;}
+    .tut small{margin:3px 0 0;font-size:13px;align-self:start;display:-webkit-box;-webkit-line-clamp:2;
+      -webkit-box-orient:vertical;overflow:hidden;}
+    .tut:has(video) strong,.tut:has(video) small{grid-column:1 / -1;margin-left:4px;}
+    .tut:has(video) strong{margin-top:10px;}
+  }
 </style>
 </head>
 <body>
@@ -168,6 +223,7 @@
           <span class="olho"><i></i>Gestores</span>
           <h2>Roteiro para Gestores</h2>
           <p>Configuração de turmas, permissões de acesso e administração da conta da escola na plataforma.</p>
+          <a class="tut-atalho" href="#tut-gestor"><i aria-hidden="true"></i>Ver os 5 tutoriais em vídeo</a>
         </div>
         
       </div>
@@ -190,6 +246,7 @@
         <a class="card video" href="https://www.youtube.com/watch?v=iJbFKzeNJ4c&list=PLBkhr8kdTOm3lcWahiNaLIRfbzKnZZdPH" target="_blank" rel="noopener"><span class="thumb" style="background-image:url(https://i.ytimg.com/vi/iJbFKzeNJ4c/hqdefault.jpg)"><i class="play" aria-hidden="true"></i></span><span class="k">Live · Teachy Educação</span><p>Formação em IA para Escolas: como treinar coordenadores, professores e família em IA</p><span class="assistir">Assistir no YouTube →</span></a>
       </div>
       
+      <div class="tutoriais" id="tut-gestor"><div class="sub-titulo"><h3>Tutoriais em vídeo</h3><p>5 vídeos curtos, narrados e legendados. Escolha um tema.</p></div><div class="tut-chips" role="tablist" aria-label="Temas dos tutoriais"><button type="button" role="tab" id="tut-gestor-t0" aria-controls="tut-gestor-g0" aria-selected="true" tabindex="0" class="tut-chip active" data-cat="0">Dados e boletim <span>3</span></button><button type="button" role="tab" id="tut-gestor-t1" aria-controls="tut-gestor-g1" aria-selected="false" tabindex="-1" class="tut-chip" data-cat="1">Inclusão e biblioteca <span>2</span></button></div><div class="tut-grupo active" data-cat="0" id="tut-gestor-g0" role="tabpanel" aria-labelledby="tut-gestor-t0"><div class="tut-grade"><div class="tut"><button type="button" class="tut-capa" data-video="_videos/gestao-dados.mp4" style="background-image:url('_videos/capas/gestao-dados.png')" aria-label="Assistir: Acompanhar o engajamento da escola"><i class="tut-play" aria-hidden="true"></i><b class="tut-dur">0:49</b></button><strong>Acompanhar o engajamento da escola</strong><small>Uso por turma e por professor, boletim em três visões e os alunos que precisam de apoio.</small></div><div class="tut"><button type="button" class="tut-capa" data-video="_videos/boletim.mp4" style="background-image:url('_videos/capas/boletim.png')" aria-label="Assistir: Configurar o boletim e as notas"><i class="tut-play" aria-hidden="true"></i><b class="tut-dur">0:49</b></button><strong>Configurar o boletim e as notas</strong><small>Períodos, indicadores com peso, nota de aprovação, média ponderada e frequência mínima.</small></div><div class="tut"><button type="button" class="tut-capa" data-video="_videos/cadastro-aluno.mp4" style="background-image:url('_videos/capas/cadastro-aluno.png')" aria-label="Assistir: Corrigir o nome de um aluno"><i class="tut-play" aria-hidden="true"></i><b class="tut-dur">0:26</b></button><strong>Corrigir o nome de um aluno</strong><small>Onde conferir o nome de registro e como ajustar nome e e-mail em Atualizar cadastro.</small></div></div></div><div class="tut-grupo" data-cat="1" id="tut-gestor-g1" role="tabpanel" aria-labelledby="tut-gestor-t1"><div class="tut-grade"><div class="tut"><button type="button" class="tut-capa" data-video="_videos/pei-escola.mp4" style="background-image:url('_videos/capas/pei-escola.png')" aria-label="Assistir: Criar e acompanhar o PEI"><i class="tut-play" aria-hidden="true"></i><b class="tut-dur">0:57</b></button><strong>Criar e acompanhar o PEI</strong><small>PEIs oficiais da escola, recomposição por habilidade, geração com IA e quem edita ou só lê.</small></div><div class="tut"><button type="button" class="tut-capa" data-video="_videos/biblioteca.mp4" style="background-image:url('_videos/capas/biblioteca.png')" aria-label="Assistir: Usar a biblioteca da escola"><i class="tut-play" aria-hidden="true"></i><b class="tut-dur">0:28</b></button><strong>Usar a biblioteca da escola</strong><small>Livros e materiais oficiais em Meus materiais, organizados em pastas e com filtro por professor.</small></div></div></div></div>
     </section>
     <section class="panel" id="panel-professor">
       <div class="cabeca">
@@ -197,6 +254,7 @@
           <span class="olho"><i></i>Professores</span>
           <h2>Roteiro para Professores</h2>
           <p>Do primeiro acesso à sala de aula: como planejar, criar atividades e se formar em IA pedagógica.</p>
+          <a class="tut-atalho" href="#tut-professor"><i aria-hidden="true"></i>Ver os 18 tutoriais em vídeo</a>
         </div>
         
       </div>
@@ -220,6 +278,7 @@
         <a class="card" href="https://share.minicoursegenerator.com/certificacao-de-inteligencia-artificial-para-13003701" target="_blank" rel="noopener"><span class="k">Certificação</span><p>IA e Educação Financeira</p><span class="assistir">Fazer a certificação →</span></a>
       </div>
       <div class="faixa"><p>Mais lives e tutoriais em vídeo da Teachy ficam reunidos no canal oficial no YouTube.</p><a class="bt-verm" href="https://www.youtube.com/channel/UC-Ld2fFxzNYwz8xfOQzkd3Q" target="_blank" rel="noopener">Ver canal no YouTube →</a></div>
+      <div class="tutoriais" id="tut-professor"><div class="sub-titulo"><h3>Tutoriais em vídeo</h3><p>18 vídeos curtos, narrados e legendados. Escolha um tema.</p></div><div class="tut-chips" role="tablist" aria-label="Temas dos tutoriais"><button type="button" role="tab" id="tut-professor-t0" aria-controls="tut-professor-g0" aria-selected="true" tabindex="0" class="tut-chip active" data-cat="0">Planejar e criar aulas <span>6</span></button><button type="button" role="tab" id="tut-professor-t1" aria-controls="tut-professor-g1" aria-selected="false" tabindex="-1" class="tut-chip" data-cat="1">Avaliar e corrigir <span>7</span></button><button type="button" role="tab" id="tut-professor-t2" aria-controls="tut-professor-g2" aria-selected="false" tabindex="-1" class="tut-chip" data-cat="2">Acompanhar a turma <span>3</span></button><button type="button" role="tab" id="tut-professor-t3" aria-controls="tut-professor-g3" aria-selected="false" tabindex="-1" class="tut-chip" data-cat="3">Simulações <span>2</span></button></div><div class="tut-grupo active" data-cat="0" id="tut-professor-g0" role="tabpanel" aria-labelledby="tut-professor-t0"><div class="tut-grade"><div class="tut"><button type="button" class="tut-capa" data-video="_videos/planejamento.mp4" style="background-image:url('_videos/capas/planejamento.png')" aria-label="Assistir: Criar o planejamento do período"><i class="tut-play" aria-hidden="true"></i><b class="tut-dur">0:47</b></button><strong>Criar o planejamento do período</strong><small>Quatro etapas: ano e turma, dias das aulas, assuntos e revisão das datas.</small></div><div class="tut"><button type="button" class="tut-capa" data-video="_videos/materiais-ia.mp4" style="background-image:url('_videos/capas/materiais-ia.png')" aria-label="Assistir: Gerar materiais com IA"><i class="tut-play" aria-hidden="true"></i><b class="tut-dur">0:27</b></button><strong>Gerar materiais com IA</strong><small>Mapa mental, flashcards, cruzadinha e listas numa página própria para editar, baixar ou levar à aula.</small></div><div class="tut"><button type="button" class="tut-capa" data-video="_videos/colaboracao.mp4" style="background-image:url('_videos/capas/colaboracao.png')" aria-label="Assistir: Criar materiais com os colegas"><i class="tut-play" aria-hidden="true"></i><b class="tut-dur">0:45</b></button><strong>Criar materiais com os colegas</strong><small>Convide colegas para editar, comentar ou ver planejamentos e aulas, com comentários ao lado.</small></div><div class="tut"><button type="button" class="tut-capa" data-video="_videos/aula-aluno.mp4" style="background-image:url('_videos/capas/aula-aluno.png')" aria-label="Assistir: Enviar uma aula para os alunos"><i class="tut-play" aria-hidden="true"></i><b class="tut-dur">0:39</b></button><strong>Enviar uma aula para os alunos</strong><small>Escolha a turma e os materiais; o aluno recebe a aula como estava no envio, numa página própria.</small></div><div class="tut"><button type="button" class="tut-capa" data-video="_videos/biblioteca.mp4" style="background-image:url('_videos/capas/biblioteca.png')" aria-label="Assistir: Usar a biblioteca da escola"><i class="tut-play" aria-hidden="true"></i><b class="tut-dur">0:28</b></button><strong>Usar a biblioteca da escola</strong><small>Livros e materiais oficiais em Meus materiais, organizados em pastas e com filtro por professor.</small></div><div class="tut"><button type="button" class="tut-capa" data-video="_videos/ferramentas-novas.mp4" style="background-image:url('_videos/capas/ferramentas-novas.png')" aria-label="Assistir: Criar músicas, murais e folhas de atividade"><i class="tut-play" aria-hidden="true"></i><b class="tut-dur">0:40</b></button><strong>Criar músicas, murais e folhas de atividade</strong><small>Uma música sobre o assunto, um mural que a turma preenche pelo celular e exercícios para imprimir.</small></div></div></div><div class="tut-grupo" data-cat="1" id="tut-professor-g1" role="tabpanel" aria-labelledby="tut-professor-t1"><div class="tut-grade"><div class="tut"><button type="button" class="tut-capa" data-video="_videos/nova-avaliacoes.mp4" style="background-image:url('_videos/capas/nova-avaliacoes.png')" aria-label="Assistir: Criar uma avaliação"><i class="tut-play" aria-hidden="true"></i><b class="tut-dur">0:54</b></button><strong>Criar uma avaliação</strong><small>Prova, simulado, redação ou projeto numa tela só, com banco de questões, IA e prévia de impressão.</small></div><div class="tut"><button type="button" class="tut-capa" data-video="_videos/prova-importada.mp4" style="background-image:url('_videos/capas/prova-importada.png')" aria-label="Assistir: Importar uma prova em PDF ou Word"><i class="tut-play" aria-hidden="true"></i><b class="tut-dur">0:28</b></button><strong>Importar uma prova em PDF ou Word</strong><small>O arquivo vira questões editáveis, revisadas lado a lado com o original.</small></div><div class="tut"><button type="button" class="tut-capa" data-video="_videos/adaptar.mp4" style="background-image:url('_videos/capas/adaptar.png')" aria-label="Assistir: Adaptar a prova para cada aluno"><i class="tut-play" aria-hidden="true"></i><b class="tut-dur">0:38</b></button><strong>Adaptar a prova para cada aluno</strong><small>Uma versão por aluno com todas as adaptações marcadas, apoios e imagem por questão.</small></div><div class="tut"><button type="button" class="tut-capa" data-video="_videos/redacao.mp4" style="background-image:url('_videos/capas/redacao.png')" aria-label="Assistir: Aplicar e corrigir redações"><i class="tut-play" aria-hidden="true"></i><b class="tut-dur">0:50</b></button><strong>Aplicar e corrigir redações</strong><small>Proposta com textos motivadores, rubrica ENEM ou FUVEST, correção por ano e envio por foto ou PDF.</small></div><div class="tut"><button type="button" class="tut-capa" data-video="_videos/simulado-enem.mp4" style="background-image:url('_videos/capas/simulado-enem.png')" aria-label="Assistir: Aplicar um simulado no modelo ENEM"><i class="tut-play" aria-hidden="true"></i><b class="tut-dur">0:43</b></button><strong>Aplicar um simulado no modelo ENEM</strong><small>Modelos de ENEM, FUVEST e UNICAMP, prova em duas colunas e correção por foto dos cartões.</small></div><div class="tut"><button type="button" class="tut-capa" data-video="_videos/cartao-resposta.mp4" style="background-image:url('_videos/capas/cartao-resposta.png')" aria-label="Assistir: Imprimir menos cartões-resposta"><i class="tut-play" aria-hidden="true"></i><b class="tut-dur">0:36</b></button><strong>Imprimir menos cartões-resposta</strong><small>Cartão que se ajusta à prova e cartão genérico para a turma, com cópias extras.</small></div><div class="tut"><button type="button" class="tut-capa" data-video="_videos/projetos.mp4" style="background-image:url('_videos/capas/projetos.png')" aria-label="Assistir: Montar um projeto interdisciplinar"><i class="tut-play" aria-hidden="true"></i><b class="tut-dur">0:51</b></button><strong>Montar um projeto interdisciplinar</strong><small>Entregáveis com prazo e rubrica pronta, grupos por sorteio e um avaliador por entrega.</small></div></div></div><div class="tut-grupo" data-cat="2" id="tut-professor-g2" role="tabpanel" aria-labelledby="tut-professor-t2"><div class="tut-grade"><div class="tut"><button type="button" class="tut-capa" data-video="_videos/plano-recuperacao.mp4" style="background-image:url('_videos/capas/plano-recuperacao.png')" aria-label="Assistir: Criar um plano de recuperação"><i class="tut-play" aria-hidden="true"></i><b class="tut-dur">0:58</b></button><strong>Criar um plano de recuperação</strong><small>Dos alunos que precisam de apoio a um plano por habilidade, com aula e exercícios prontos.</small></div><div class="tut"><button type="button" class="tut-capa" data-video="_videos/pei-escola.mp4" style="background-image:url('_videos/capas/pei-escola.png')" aria-label="Assistir: Criar e acompanhar o PEI"><i class="tut-play" aria-hidden="true"></i><b class="tut-dur">0:57</b></button><strong>Criar e acompanhar o PEI</strong><small>PEIs oficiais da escola, recomposição por habilidade, geração com IA e quem edita ou só lê.</small></div><div class="tut"><button type="button" class="tut-capa" data-video="_videos/mural.mp4" style="background-image:url('_videos/capas/mural.png')" aria-label="Assistir: Publicar no mural da turma"><i class="tut-play" aria-hidden="true"></i><b class="tut-dur">0:30</b></button><strong>Publicar no mural da turma</strong><small>Recados com materiais anexados; os alunos recebem aviso no sino, no celular e por e-mail.</small></div></div></div><div class="tut-grupo" data-cat="3" id="tut-professor-g3" role="tabpanel" aria-labelledby="tut-professor-t3"><div class="tut-grade"><div class="tut"><button type="button" class="tut-capa" data-video="_videos/simulacoes-3d.mp4" style="background-image:url('_videos/capas/simulacoes-3d.png')" aria-label="Assistir: Explorar simulações em 3D"><i class="tut-play" aria-hidden="true"></i><b class="tut-dur">0:55</b></button><strong>Explorar simulações em 3D</strong><small>Sistema solar, planeta Terra, modelos atômicos e leis de Kepler, prontos para enviar à turma.</small></div><div class="tut"><button type="button" class="tut-capa" data-video="_videos/simulacoes-setembro.mp4" style="background-image:url('_videos/capas/simulacoes-setembro.png')" aria-label="Assistir: Usar laboratórios virtuais"><i class="tut-play" aria-hidden="true"></i><b class="tut-dur">0:55</b></button><strong>Usar laboratórios virtuais</strong><small>Titulação, gás ideal, ábaco, material dourado e balança de equações.</small></div></div></div></div>
     </section>
     <section class="panel" id="panel-familia">
       <div class="cabeca">
@@ -227,6 +286,7 @@
           <span class="olho"><i></i>Famílias</span>
           <h2>Roteiro para Famílias</h2>
           <p>Acompanhe as atividades, o progresso e a comunicação da escola em um só lugar.</p>
+          <a class="tut-atalho" href="#tut-familia"><i aria-hidden="true"></i>Ver os 3 tutoriais em vídeo</a>
         </div>
         <a class="bt-verm" href="https://drive.google.com/uc?export=download&id=1mBdP6l_DfNqleB89k3IA1V0OiiafljP9" target="_blank" rel="noopener">Baixar Guia para Famílias ↓</a>
       </div>
@@ -247,6 +307,7 @@
           <div class="linha"><span>Central de Ajuda <span class="tag">FAQ</span></span><a href="https://www.teachy.com.br/pt-BR/teachy-help-center" target="_blank" rel="noopener">Acessar →</a></div>
         </aside>
       </div>
+      <div class="tutoriais" id="tut-familia"><div class="sub-titulo"><h3>Tutoriais em vídeo</h3><p>3 vídeos curtos, narrados e legendados. Escolha um tema.</p></div><div class="tut-chips" role="tablist" aria-label="Temas dos tutoriais"><button type="button" role="tab" id="tut-familia-t0" aria-controls="tut-familia-g0" aria-selected="true" tabindex="0" class="tut-chip active" data-cat="0">Acompanhar o filho <span>2</span></button><button type="button" role="tab" id="tut-familia-t1" aria-controls="tut-familia-g1" aria-selected="false" tabindex="-1" class="tut-chip" data-cat="1">Falar com a escola <span>1</span></button></div><div class="tut-grupo active" data-cat="0" id="tut-familia-g0" role="tabpanel" aria-labelledby="tut-familia-t0"><div class="tut-grade"><div class="tut"><button type="button" class="tut-capa" data-video="_videos/familia-tarefas.mp4" style="background-image:url('_videos/capas/familia-tarefas.png')" aria-label="Assistir: Tarefas do seu filho"><i class="tut-play" aria-hidden="true"></i><b class="tut-dur">0:31</b></button><strong>Tarefas do seu filho</strong><small>Próximas tarefas, atividades atrasadas e entregues, e o que ele estudou com IA.</small></div><div class="tut"><button type="button" class="tut-capa" data-video="_videos/familia-notas.mp4" style="background-image:url('_videos/capas/familia-notas.png')" aria-label="Assistir: Notas e presenças"><i class="tut-play" aria-hidden="true"></i><b class="tut-dur">0:22</b></button><strong>Notas e presenças</strong><small>Boletim por bimestre, avaliações de cada disciplina e o calendário de presenças.</small></div></div></div><div class="tut-grupo" data-cat="1" id="tut-familia-g1" role="tabpanel" aria-labelledby="tut-familia-t1"><div class="tut-grade"><div class="tut"><button type="button" class="tut-capa" data-video="_videos/familia-comunicados.mp4" style="background-image:url('_videos/capas/familia-comunicados.png')" aria-label="Assistir: Comunicados e conversas"><i class="tut-play" aria-hidden="true"></i><b class="tut-dur">0:20</b></button><strong>Comunicados e conversas</strong><small>Leia, reaja e comente os comunicados, e fale com a escola nos canais da turma.</small></div></div></div></div>
     </section>
     <section class="panel" id="panel-aluno">
       <div class="cabeca">
@@ -254,6 +315,7 @@
           <span class="olho"><i></i>Alunos</span>
           <h2>Roteiro para Alunos</h2>
           <p>Entenda, revise e pratique o conteúdo da escola do seu jeito.</p>
+          <a class="tut-atalho" href="#tut-aluno"><i aria-hidden="true"></i>Ver os 6 tutoriais em vídeo</a>
         </div>
         <a class="bt-verm" href="Teachy-Guia-para-estudantes.pdf" download>Baixar Guia para Estudantes ↓</a>
       </div>
@@ -273,6 +335,7 @@
           <div class="linha"><span>Central de Ajuda <span class="tag">FAQ</span></span><a href="https://www.teachy.com.br/pt-BR/teachy-help-center" target="_blank" rel="noopener">Acessar →</a></div>
         </aside>
       </div>
+      <div class="tutoriais" id="tut-aluno"><div class="sub-titulo"><h3>Tutoriais em vídeo</h3><p>6 vídeos curtos, narrados e legendados. Escolha um tema.</p></div><div class="tut-chips" role="tablist" aria-label="Temas dos tutoriais"><button type="button" role="tab" id="tut-aluno-t0" aria-controls="tut-aluno-g0" aria-selected="true" tabindex="0" class="tut-chip active" data-cat="0">Primeiro acesso <span>1</span></button><button type="button" role="tab" id="tut-aluno-t1" aria-controls="tut-aluno-g1" aria-selected="false" tabindex="-1" class="tut-chip" data-cat="1">Estudar <span>3</span></button><button type="button" role="tab" id="tut-aluno-t2" aria-controls="tut-aluno-g2" aria-selected="false" tabindex="-1" class="tut-chip" data-cat="2">Praticar <span>2</span></button></div><div class="tut-grupo active" data-cat="0" id="tut-aluno-g0" role="tabpanel" aria-labelledby="tut-aluno-t0"><div class="tut-grade"><div class="tut"><button type="button" class="tut-capa" data-video="_videos/acesso-alunos.mp4" style="background-image:url('_videos/capas/acesso-alunos.png')" aria-label="Assistir: Fazer o primeiro acesso"><i class="tut-play" aria-hidden="true"></i><b class="tut-dur">1:13</b></button><strong>Fazer o primeiro acesso</strong><small>Do convite no e-mail à página inicial: cadastro, perguntas rápidas e a mascote Lara.</small></div></div></div><div class="tut-grupo" data-cat="1" id="tut-aluno-g1" role="tabpanel" aria-labelledby="tut-aluno-t1"><div class="tut-grade"><div class="tut"><button type="button" class="tut-capa" data-video="_videos/estudar-aula.mp4" style="background-image:url('_videos/capas/estudar-aula.png')" aria-label="Assistir: Estudar uma aula em etapas"><i class="tut-play" aria-hidden="true"></i><b class="tut-dur">0:46</b></button><strong>Estudar uma aula em etapas</strong><small>Teoria e uma prática rápida em cada etapa, com um desafio final para revisar.</small></div><div class="tut"><button type="button" class="tut-capa" data-video="_videos/aula-aluno.mp4" style="background-image:url('_videos/capas/aula-aluno.png')" aria-label="Assistir: Enviar uma aula para os alunos"><i class="tut-play" aria-hidden="true"></i><b class="tut-dur">0:39</b></button><strong>Enviar uma aula para os alunos</strong><small>Escolha a turma e os materiais; o aluno recebe a aula como estava no envio, numa página própria.</small></div><div class="tut"><button type="button" class="tut-capa" data-video="_videos/fim-sessao.mp4" style="background-image:url('_videos/capas/fim-sessao.png')" aria-label="Assistir: Ver o resultado da sessão"><i class="tut-play" aria-hidden="true"></i><b class="tut-dur">0:34</b></button><strong>Ver o resultado da sessão</strong><small>XP, pontuação, corações e dicas ao terminar, com bônus para quem guarda corações.</small></div></div></div><div class="tut-grupo" data-cat="2" id="tut-aluno-g2" role="tabpanel" aria-labelledby="tut-aluno-t2"><div class="tut-grade"><div class="tut"><button type="button" class="tut-capa" data-video="_videos/planos-estudo.mp4" style="background-image:url('_videos/capas/planos-estudo.png')" aria-label="Assistir: Montar um plano de estudos"><i class="tut-play" aria-hidden="true"></i><b class="tut-dur">0:45</b></button><strong>Montar um plano de estudos</strong><small>Escolha o objetivo, os materiais e os dias da semana, e siga o plano dia a dia.</small></div><div class="tut"><button type="button" class="tut-capa" data-video="_videos/aluno-banco.mp4" style="background-image:url('_videos/capas/aluno-banco.png')" aria-label="Assistir: Praticar com questões de vestibular"><i class="tut-play" aria-hidden="true"></i><b class="tut-dur">0:29</b></button><strong>Praticar com questões de vestibular</strong><small>Listas só com questões reais de vestibulares e olimpíadas, por fonte, ano e dificuldade.</small></div></div></div></div>
     </section>
 </div></main>
 
@@ -294,6 +357,48 @@
       document.getElementById('conteudo').scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   }
+</script>
+<script>
+  const pausarTudo = () => { for (const v of document.querySelectorAll('.tut video')) v.pause(); };
+  for (const bloco of document.querySelectorAll('.tutoriais')) {
+    const chips = [...bloco.querySelectorAll('.tut-chip')];
+    const escolher = (c) => {
+      pausarTudo();
+      for (const x of chips) {
+        const sim = x === c;
+        x.classList.toggle('active', sim); x.setAttribute('aria-selected', sim); x.tabIndex = sim ? 0 : -1;
+      }
+      for (const g of bloco.querySelectorAll('.tut-grupo')) g.classList.toggle('active', g.dataset.cat === c.dataset.cat);
+    };
+    chips.forEach((c, i) => {
+      c.addEventListener('click', () => escolher(c));
+      c.addEventListener('keydown', (e) => {
+        const passo = {ArrowRight: 1, ArrowLeft: -1}[e.key];
+        if (!passo) return;
+        e.preventDefault();
+        const alvo = chips[(i + passo + chips.length) % chips.length];
+        escolher(alvo); alvo.focus();
+      });
+    });
+  }
+  // trocar de aba (Gestores, Professores…) não deixa vídeo tocando escondido
+  for (const t of document.querySelectorAll('[data-role]')) t.addEventListener('click', pausarTudo);
+  for (const a of document.querySelectorAll('.tut-atalho')) a.addEventListener('click', (e) => {
+    const alvo = document.querySelector(a.getAttribute('href'));
+    if (!alvo) return;
+    e.preventDefault();
+    alvo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  for (const capa of document.querySelectorAll('.tut-capa')) capa.addEventListener('click', () => {
+    pausarTudo();
+    const v = document.createElement('video');
+    v.controls = true; v.autoplay = true; v.playsInline = true; v.preload = 'auto';
+    v.poster = getComputedStyle(capa).backgroundImage.slice(5, -2);
+    v.setAttribute('aria-label', capa.getAttribute('aria-label'));
+    v.src = capa.dataset.video;
+    capa.replaceWith(v);
+    v.focus();
+  });
 </script>
 </body>
 </html>

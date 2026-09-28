@@ -7,3 +7,4 @@ vestida com a identidade da Escola Sagrada Família (emblema, âmbar e vermelho 
 
 - `index.html` — a página (HTML único, logo embutido)
 - `Teachy-Guia-para-estudantes.pdf` — guia para estudantes (versão corrigida)
+- `_videos/` — 29 tutoriais em vídeo (mp4) e as capas; o vídeo só carrega quando a pessoa clica
